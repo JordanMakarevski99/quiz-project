@@ -1,6 +1,6 @@
 'use strict';
 
-// --- DOM Elements ---
+
 const body = document.body;
 const appContainer = document.querySelector('.app-container');
 const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -36,35 +36,35 @@ const incorrectCountSpan = document.getElementById('incorrect-count');
 
 const categorySelectEl = document.getElementById('category-select');
 const categoryErrorEl = document.getElementById('category-error');
-const totalQuestionsDisplay = document.getElementById('total-questions-display'); // For consistency
+const totalQuestionsDisplay = document.getElementById('total-questions-display');
 const CATEGORY_API_URL = 'https://opentdb.com/api_category.php';
 
 
-// --- State Variables ---
+
 let currentQuestionIndex = 0;
 let score = 0;
-let questions = []; // Stores fetched questions
+let questions = [];
 let timerInterval;
-let timeLeft = 15; // Seconds per question
-const TIME_PER_QUESTION = 15; // Constant for resetting
-const TOTAL_QUESTIONS = 10; // Number of questions to fetch
+let timeLeft = 15;
+const TIME_PER_QUESTION = 15;
+const TOTAL_QUESTIONS = 10;
 const BASE_API_URL = `https://opentdb.com/api.php?amount=${TOTAL_QUESTIONS}&type=multiple&encode=url3986`;
 
 let bestScore = localStorage.getItem('quizBestScore') || 0;
 let isDarkMode = localStorage.getItem('quizDarkMode') === 'true';
-let hintTimeout; // Timeout ID for the hint
-let hintShownThisQuestion = false; // Flag to track if hint was shown
-let quizResults = []; // Array to store details of each answer
+let hintTimeout;
+let hintShownThisQuestion = false;
+let quizResults = [];
 
-const HINT_DELAY = 7000; // 7 seconds in milliseconds
-// --- API ---
+const HINT_DELAY = 7000;
+
 const API_URL = `https://opentdb.com/api.php?amount=${TOTAL_QUESTIONS}&type=multiple&encode=url3986`;
 
-// --- Helper Functions ---
+
 
 async function fetchCategories() {
-    categorySelectEl.disabled = true; // Disable dropdown while loading
-    categoryErrorEl.style.display = 'none'; // Hide previous errors
+    categorySelectEl.disabled = true;
+    categoryErrorEl.style.display = 'none';
     try {
         const response = await fetch(CATEGORY_API_URL);
         if (!response.ok) {
@@ -80,49 +80,49 @@ async function fetchCategories() {
         console.error("Failed to fetch categories:", error);
         categoryErrorEl.textContent = `Error loading categories: ${error.message}. Please try again later.`;
         categoryErrorEl.style.display = 'block';
-        // Keep start button disabled if categories fail to load
+
         startButton.textContent = 'Error Loading Categories';
         startButton.disabled = true;
     } finally {
-         categorySelectEl.disabled = false; // Re-enable dropdown after loading (or failure)
+         categorySelectEl.disabled = false;
     }
 }
 function populateCategoryDropdown(categories) {
-    categorySelectEl.innerHTML = ''; // Clear "Loading..." option
+    categorySelectEl.innerHTML = '';
 
-    // Add the default "Any Category" option first
+
     const defaultOption = document.createElement('option');
-    defaultOption.value = ''; // Empty value means no specific category
+    defaultOption.value = '';
     defaultOption.textContent = 'Any Category';
     categorySelectEl.appendChild(defaultOption);
 
-    // Sort categories alphabetically for better UX
+
     categories.sort((a, b) => a.name.localeCompare(b.name));
 
-    // Add options for each fetched category
+
     categories.forEach(category => {
         const option = document.createElement('option');
-        option.value = category.id; // Use category ID as the value
-        option.textContent = category.name; // Display category name
+        option.value = category.id;
+        option.textContent = category.name;
         categorySelectEl.appendChild(option);
     });
 
-    // Enable the start button now that categories are loaded
+
     startButton.disabled = false;
     startButton.textContent = 'Start Quiz';
 }
 
-// Shuffle array elements (Fisher-Yates Algorithm)
+
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+        [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 }
 
-// Switch between screens
+
 function showScreen(screenToShow) {
     [startScreen, quizScreen, resultsScreen].forEach(screen => {
         screen.classList.remove('active');
@@ -130,11 +130,11 @@ function showScreen(screenToShow) {
     screenToShow.classList.add('active');
 }
 
-// --- Dark Mode ---
+
 function applyDarkMode(state) {
     isDarkMode = state;
     body.classList.toggle('dark-mode', isDarkMode);
-    darkModeIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon'; // Change icon
+    darkModeIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
     localStorage.setItem('quizDarkMode', isDarkMode);
 }
 
@@ -142,7 +142,7 @@ function toggleDarkMode() {
     applyDarkMode(!isDarkMode);
 }
 
-// --- Local Storage ---
+
 function updateBestScore() {
     if (score > bestScore) {
         bestScore = score;
@@ -152,14 +152,14 @@ function updateBestScore() {
     bestScoreEndEl.textContent = bestScore;
 }
 
-// --- Timer & Hint Logic ---
+
 function startTimer() {
     timeLeft = TIME_PER_QUESTION;
     timerEl.textContent = timeLeft;
     timerEl.classList.remove('warning');
-    hintShownThisQuestion = false; // Reset hint flag for the new question
-    clearTimeout(hintTimeout); // Clear previous hint timeout
-    clearInterval(timerInterval); // Clear previous main timer
+    hintShownThisQuestion = false;
+    clearTimeout(hintTimeout);
+    clearInterval(timerInterval);
 
     timerInterval = setInterval(() => {
         timeLeft--;
@@ -173,25 +173,25 @@ function startTimer() {
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            clearTimeout(hintTimeout); // Also clear hint timeout if main timer ends
+            clearTimeout(hintTimeout);
             timerEl.classList.remove('warning');
-            handleTimeout(); // Handle timeout situation
+            handleTimeout();
         }
     }, 1000);
 
-    // Set timeout for the hint
+
     hintTimeout = setTimeout(() => {
         const options = Array.from(answerOptionsEl.children);
-        // Check if an answer was already selected (button is disabled OR has correct/incorrect class)
+
         const isAnswered = options.some(btn => btn.disabled || btn.classList.contains('correct') || btn.classList.contains('incorrect'));
-        if (!isAnswered) { // Only show hint if not answered yet
+        if (!isAnswered) {
              showHint();
         }
     }, HINT_DELAY);
 }
 
 function showHint() {
-    if (hintShownThisQuestion) return; // Don't show hint twice
+    if (hintShownThisQuestion) return;
 
     const currentQ = questions[currentQuestionIndex];
     const correctAnswer = currentQ.correct_answer;
@@ -199,66 +199,66 @@ function showHint() {
         button => button.textContent !== correctAnswer && !button.disabled && !button.classList.contains('option-hint-removed')
     );
 
-    if (incorrectOptions.length > 1) { // Only remove if there's more than one incorrect option left
+    if (incorrectOptions.length > 1) {
         const randomIndex = Math.floor(Math.random() * incorrectOptions.length);
         const buttonToRemove = incorrectOptions[randomIndex];
         buttonToRemove.classList.add('option-hint-removed');
         hintShownThisQuestion = true;
 
-        // Optional: Display a small hint message briefly
+
         feedbackEl.textContent = "Hint: One incorrect option faded.";
-        feedbackEl.className = 'feedback hint-message'; // Use a specific class for styling
+        feedbackEl.className = 'feedback hint-message';
         feedbackEl.style.display = 'block';
-        // Hide hint message after a few seconds
+
         setTimeout(() => {
-             if (feedbackEl.classList.contains('hint-message')) { // Only clear if it's still the hint message
+             if (feedbackEl.classList.contains('hint-message')) {
                 feedbackEl.textContent = '';
                 feedbackEl.style.display = 'none';
-                feedbackEl.className = 'feedback'; // Reset class
+                feedbackEl.className = 'feedback';
              }
         }, 2000);
     }
 }
 
 function handleTimeout() {
-    // Record the result as incorrect due to timeout
+
     recordResult('TIMEOUT', false);
 
-    // Provide feedback
+
     const correctAnswer = questions[currentQuestionIndex].correct_answer;
     feedbackEl.textContent = `Time's up! The correct answer was: ${correctAnswer}`;
     feedbackEl.className = 'feedback incorrect';
     feedbackEl.style.display = 'block';
 
-    // Disable options and show next button
+
     disableOptions();
-    // Highlight the correct answer visually
+
     highlightCorrectAnswer(correctAnswer);
     nextButton.classList.remove('hidden');
 }
 
-// --- Progress Bar ---
-// *** FUNCTION DEFINITION RE-ADDED HERE ***
+
+
 function updateProgressBar() {
     if (questions.length > 0) {
         const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
         progressBar.style.width = `${progress}%`;
         progressBarContainer.setAttribute('aria-valuenow', progress.toFixed(0));
     } else {
-        // Handle case where questions aren't loaded yet or empty
+
         progressBar.style.width = `0%`;
         progressBarContainer.setAttribute('aria-valuenow', '0');
     }
 }
 
-// --- Question Display & Handling ---
+
 function displayQuestion() {
     if (currentQuestionIndex >= questions.length) {
         showResults();
         return;
     }
 
-    // Reset UI elements
+
     clearInterval(timerInterval);
     clearTimeout(hintTimeout);
     hintShownThisQuestion = false;
@@ -271,7 +271,7 @@ function displayQuestion() {
 
     const currentQ = questions[currentQuestionIndex];
     questionTextEl.textContent = currentQ.question;
-    answerOptionsEl.innerHTML = ''; // Clear previous options
+    answerOptionsEl.innerHTML = '';
 
     const options = shuffleArray([...currentQ.incorrect_answers, currentQ.correct_answer]);
 
@@ -283,8 +283,8 @@ function displayQuestion() {
         answerOptionsEl.appendChild(button);
     });
 
-    updateProgressBar(); // *** CRITICAL: Call the updateProgressBar function ***
-    startTimer();        // *** CRITICAL: Call startTimer AFTER progress bar update attempt ***
+    updateProgressBar();
+    startTimer();
 }
 
 function disableOptions() {
@@ -323,7 +323,7 @@ function selectAnswer(selectedButton, correctAnswer) {
         feedbackEl.className = 'feedback incorrect';
         highlightCorrectAnswer(correctAnswer);
     }
-    timerEl.classList.remove('warning'); // Remove warning on answer selection
+    timerEl.classList.remove('warning');
     feedbackEl.style.display = 'block';
     nextButton.classList.remove('hidden');
 }
@@ -346,57 +346,57 @@ function nextQuestion() {
     }
 }
 
-// --- Quiz Flow ---
+
 async function fetchQuestions() {
     startButton.disabled = true;
     startButton.textContent = 'Loading Questions...';
-    apiErrorEl.style.display = 'none'; // Hide general API errors
+    apiErrorEl.style.display = 'none';
 
-    // Get selected category ID from dropdown
+
     const selectedCategoryId = categorySelectEl.value;
-    let currentApiUrl = BASE_API_URL; // Start with base URL
+    let currentApiUrl = BASE_API_URL;
 
-    // Append category parameter if a specific category is chosen
+
     if (selectedCategoryId) {
         currentApiUrl += `&category=${selectedCategoryId}`;
     }
 
     try {
-        const response = await fetch(currentApiUrl); // Use the potentially modified URL
+        const response = await fetch(currentApiUrl);
         if (!response.ok) {
             throw new Error(`Network response was not ok (Status: ${response.status})`);
         }
         const data = await response.json();
 
-        // Check API response code
+
         if (data.response_code !== 0) {
             let errorMsg = `API Error: Could not fetch questions (Code ${data.response_code}).`;
             if (data.response_code === 1) {
                 errorMsg = `Not enough questions found for the selected topic. Try 'Any Category' or choose another.`;
             } else if (data.response_code === 2) {
                 errorMsg = `Invalid parameter in request. Check category ID.`;
-            } // Add more specific messages if needed based on OTDB docs
+            }
             throw new Error(errorMsg);
         }
 
-        // Use decodeURIComponent as before
+
         questions = data.results.map(q => ({
             question: decodeURIComponent(q.question),
             correct_answer: decodeURIComponent(q.correct_answer),
             incorrect_answers: q.incorrect_answers.map(decodeURIComponent)
         }));
 
-        if (questions.length === 0) { // Should be caught by response_code 1, but double-check
+        if (questions.length === 0) {
             throw new Error("API returned 0 questions for this topic.");
         }
 
-        startQuiz(); // Only start if fetch is successful
+        startQuiz();
 
     } catch (error) {
         console.error("Failed to fetch questions:", error);
-        apiErrorEl.textContent = `Error: ${error.message}`; // Display error in the general API error div
+        apiErrorEl.textContent = `Error: ${error.message}`;
         apiErrorEl.style.display = 'block';
-        // Re-enable start button to allow retrying or changing category
+
         startButton.disabled = false;
         startButton.textContent = 'Start Quiz';
     }
@@ -417,7 +417,7 @@ function showResults() {
     totalQuestionsResultsEl.textContent = questions.length;
     updateBestScore();
 
-    // Populate the results breakdown lists
+
     correctQuestionsListEl.innerHTML = '';
     incorrectQuestionsListEl.innerHTML = '';
     let correctCount = 0;
@@ -444,36 +444,36 @@ function showResults() {
         }
     });
 
-    // Update counts
+
     correctCountSpan.textContent = correctCount;
     incorrectCountSpan.textContent = incorrectCount;
 
-    // Show the results screen
+
     showScreen(resultsScreen);
 }
 
 
 function retryQuiz() {
-    // Reset state and go back to start screen
-    startButton.disabled = false; // Ensure start button is enabled
+
+    startButton.disabled = false;
     startButton.textContent = 'Start Quiz';
     clearInterval(timerInterval);
     clearTimeout(hintTimeout);
     showScreen(startScreen);
-    // Categories should still be populated in the dropdown
+
 }
 
-// --- Initialization ---
+
 function initApp() {
     applyDarkMode(isDarkMode);
     bestScoreStartEl.textContent = bestScore;
     timePerQuestionDisplay.textContent = TIME_PER_QUESTION;
-    totalQuestionsDisplay.textContent = TOTAL_QUESTIONS; // Set total questions display
+    totalQuestionsDisplay.textContent = TOTAL_QUESTIONS;
 
-    // Fetch categories as soon as the app loads
-    fetchCategories(); // This will enable the start button on success
 
-    // Add Event Listeners
+    fetchCategories();
+
+
     darkModeToggle.addEventListener('click', toggleDarkMode);
     startButton.addEventListener('click', fetchQuestions);
     nextButton.addEventListener('click', nextQuestion);
@@ -482,5 +482,5 @@ function initApp() {
     showScreen(startScreen);
 }
 
-// --- Run the App ---
+
 document.addEventListener('DOMContentLoaded', initApp);

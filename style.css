@@ -1,7 +1,7 @@
-/* Import Google Font */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-/* --- Base Styles & Resets --- */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,39 +11,39 @@
 :root {
     --font-primary: 'Poppins', sans-serif;
 
-    /* Light Mode Palette */
-    --primary-bg-light: #f0f2f5; /* Lighter gray background */
-    --secondary-bg-light: #ffffff; /* White card background */
-    --text-color-light: #1c1e21; /* Darker text for contrast */
-    --text-secondary-light: #606770; /* Gray for secondary text */
-    --accent-color-light: #007bff; /* Vibrant blue */
-    --accent-hover-light: #0056b3; /* Darker blue on hover */
-    --correct-color-light: #28a745; /* Green for correct */
-    --incorrect-color-light: #dc3545; /* Red for incorrect */
-    --border-color-light: #e4e6eb; /* Light border */
+
+    --primary-bg-light: #f0f2f5;
+    --secondary-bg-light: #ffffff;
+    --text-color-light: #1c1e21;
+    --text-secondary-light: #606770;
+    --accent-color-light: #007bff;
+    --accent-hover-light: #0056b3;
+    --correct-color-light: #28a745;
+    --incorrect-color-light: #dc3545;
+    --border-color-light: #e4e6eb;
     --shadow-color-light: rgba(0, 0, 0, 0.1);
     --button-text-light: #ffffff;
     --link-color-light: #007bff;
-    --timer-color-light: #ffc107; /* Amber */
+    --timer-color-light: #ffc107;
     --timer-warning-light: #dc3545;
 
-    /* Dark Mode Palette */
-    --primary-bg-dark: #18191a; /* Very dark gray */
-    --secondary-bg-dark: #242526; /* Dark card background */
-    --text-color-dark: #e4e6eb; /* Light gray text */
-    --text-secondary-dark: #b0b3b8; /* Lighter gray for secondary */
-    --accent-color-dark: #2d88ff; /* Brighter blue for dark mode */
-    --accent-hover-dark: #5a9fff; /* Lighter blue on hover */
-    --correct-color-dark: #34c759; /* Brighter green */
-    --incorrect-color-dark: #ff453a; /* Brighter red */
-    --border-color-dark: #3a3b3c; /* Darker border */
+
+    --primary-bg-dark: #18191a;
+    --secondary-bg-dark: #242526;
+    --text-color-dark: #e4e6eb;
+    --text-secondary-dark: #b0b3b8;
+    --accent-color-dark: #2d88ff;
+    --accent-hover-dark: #5a9fff;
+    --correct-color-dark: #34c759;
+    --incorrect-color-dark: #ff453a;
+    --border-color-dark: #3a3b3c;
     --shadow-color-dark: rgba(0, 0, 0, 0.3);
     --button-text-dark: #ffffff;
     --link-color-dark: #2d88ff;
-    --timer-color-dark: #ffd60a; /* Brighter Amber */
+    --timer-color-dark: #ffd60a;
     --timer-warning-dark: #ff453a;
 
-    /* Apply Light Mode by default */
+
     --primary-bg: var(--primary-bg-light);
     --secondary-bg: var(--secondary-bg-light);
     --text-color: var(--text-color-light);
@@ -61,7 +61,7 @@
 }
 
 body.dark-mode {
-    /* Apply Dark Mode variables */
+
     --primary-bg: var(--primary-bg-dark);
     --secondary-bg: var(--secondary-bg-dark);
     --text-color: var(--text-color-dark);
@@ -91,35 +91,35 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    padding: 25px 15px; /* Add some padding */
+    padding: 25px 15px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- App Container --- */
+
 .app-container {
     background-color: var(--secondary-bg);
-    padding: 30px 35px; /* Increased padding */
-    border-radius: 12px; /* Slightly more rounded */
+    padding: 30px 35px;
+    border-radius: 12px;
     box-shadow: 0 6px 20px var(--shadow-color);
     width: 100%;
-    max-width: 650px; /* Wider container */
+    max-width: 650px;
     text-align: center;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid var(--border-color); /* Subtle border */
+    border: 1px solid var(--border-color);
 }
 
-/* --- Header --- */
+
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px; /* More space below header */
+    margin-bottom: 30px;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--border-color);
 }
 
 header h1 {
-    font-size: 2em; /* Larger title */
+    font-size: 2em;
     font-weight: 700;
     color: var(--accent-color);
 }
@@ -127,23 +127,23 @@ header h1 {
 #dark-mode-toggle {
     background: none;
     border: none;
-    font-size: 1.6em; /* Larger icon */
+    font-size: 1.6em;
     cursor: pointer;
-    color: var(--text-secondary); /* Use secondary text color for icon */
+    color: var(--text-secondary);
     transition: color 0.3s ease, transform 0.2s ease;
     padding: 5px;
     border-radius: 50%;
 }
 #dark-mode-toggle:hover {
     color: var(--accent-color);
-    background-color: rgba(0, 0, 0, 0.05); /* Subtle hover background */
+    background-color: rgba(0, 0, 0, 0.05);
     transform: scale(1.1);
 }
 body.dark-mode #dark-mode-toggle:hover {
      background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* --- Screen Management & Transitions --- */
+
 .screen {
     display: none;
     flex-direction: column;
@@ -161,7 +161,7 @@ body.dark-mode #dark-mode-toggle:hover {
     to { opacity: 1; transform: scale(1); }
 }
 
-/* --- Start & Results Screen --- */
+
 #start-screen h2, #results-screen h2 {
     font-size: 1.8em;
     font-weight: 600;
@@ -173,25 +173,25 @@ body.dark-mode #dark-mode-toggle:hover {
     font-size: 1.1em;
     color: var(--text-secondary);
     margin-bottom: 25px;
-    max-width: 90%; /* Prevent text getting too wide */
+    max-width: 90%;
 }
 
 .best-score-display {
     margin-top: 25px;
     font-weight: 500;
     font-size: 1.1em;
-    color: var(--timer-color); /* Use timer color for emphasis */
+    color: var(--timer-color);
 }
 .best-score-display span {
     font-weight: 700;
 }
 
-/* --- Buttons (General) --- */
+
 .btn {
     background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
     color: var(--button-text);
     border: none;
-    padding: 14px 30px; /* Larger padding */
+    padding: 14px 30px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1.1em;
@@ -223,28 +223,28 @@ body.dark-mode #dark-mode-toggle:hover {
     display: none;
 }
 
-/* Specific Button Styles */
+
 #retry-button {
-    /* Optional: Different style for retry */
-    /* background: linear-gradient(135deg, var(--correct-color) 0%, #218838 100%); */
+
+
 }
 
 
-/* --- Quiz Screen --- */
+
 .quiz-header {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    gap: 20px; /* Space between progress and timer */
+    gap: 20px;
 }
 
 .progress-container {
-    flex-grow: 1; /* Take available space */
-    background-color: var(--border-color); /* Use border color for bg */
+    flex-grow: 1;
+    background-color: var(--border-color);
     border-radius: 10px;
-    height: 12px; /* Slimmer bar */
+    height: 12px;
     overflow: hidden;
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
@@ -254,7 +254,7 @@ body.dark-mode #dark-mode-toggle:hover {
     width: 0%;
     background: linear-gradient(90deg, var(--accent-color) 0%, var(--accent-hover) 100%);
     border-radius: 10px;
-    transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother transition */
+    transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .timer {
@@ -265,12 +265,12 @@ body.dark-mode #dark-mode-toggle:hover {
     border: 1px solid var(--border-color);
     padding: 3px 10px;
     border-radius: 6px;
-    min-width: 50px; /* Ensure space */
+    min-width: 50px;
     text-align: center;
     transition: color 0.3s ease, border-color 0.3s ease;
 }
 
-.timer.warning { /* Class added via JS potentially */
+.timer.warning {
      color: var(--timer-warning);
      border-color: var(--timer-warning);
      animation: pulse 1s infinite;
@@ -284,7 +284,7 @@ body.dark-mode #dark-mode-toggle:hover {
 
 
 .question-text {
-    font-size: 1.5em; /* Slightly larger question text */
+    font-size: 1.5em;
     font-weight: 500;
     margin-bottom: 30px;
     min-height: 70px;
@@ -292,16 +292,16 @@ body.dark-mode #dark-mode-toggle:hover {
     color: var(--text-color);
 }
 
-/* --- Answer Options --- */
+
 .answer-options {
     display: grid;
-    grid-template-columns: 1fr; /* Default to single column */
-    gap: 15px; /* More space between options */
+    grid-template-columns: 1fr;
+    gap: 15px;
     width: 100%;
     margin-bottom: 25px;
 }
 
-/* Two columns layout for wider screens */
+
 @media (min-width: 600px) {
     .answer-options {
         grid-template-columns: 1fr 1fr;
@@ -312,10 +312,10 @@ body.dark-mode #dark-mode-toggle:hover {
     background-color: var(--secondary-bg);
     color: var(--text-color);
     border: 2px solid var(--border-color);
-    padding: 15px; /* More padding */
+    padding: 15px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1.05em; /* Slightly larger font */
+    font-size: 1.05em;
     font-weight: 500;
     text-align: left;
     transition: all 0.2s ease-in-out;
@@ -325,7 +325,7 @@ body.dark-mode #dark-mode-toggle:hover {
 
 .option:hover:not(:disabled) {
     border-color: var(--accent-color);
-    background-color: var(--primary-bg); /* Use primary background on hover */
+    background-color: var(--primary-bg);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }
@@ -339,17 +339,17 @@ body.dark-mode .option:hover:not(:disabled) {
 
 .option:disabled {
     cursor: not-allowed;
-    opacity: 0.6; /* Make disabled options less prominent */
+    opacity: 0.6;
 }
 
-/* Correct/Incorrect States */
+
 .option.correct,
 .option.correct:hover:not(:disabled) {
     background-color: var(--correct-color);
     border-color: var(--correct-color);
     color: white;
     font-weight: 600;
-    transform: scale(1.02); /* Slightly larger effect */
+    transform: scale(1.02);
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
@@ -363,13 +363,13 @@ body.dark-mode .option:hover:not(:disabled) {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* Ensure the specifically marked correct answer also gets styles */
-.option.correct.marked-correct { /* A potential class to mark the right one if user was wrong */
-     opacity: 1; /* Ensure it's fully visible */
+
+.option.correct.marked-correct {
+     opacity: 1;
 }
 
 
-/* --- Feedback Area --- */
+
 .feedback {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -383,7 +383,7 @@ body.dark-mode .option:hover:not(:disabled) {
 
 .feedback.correct {
     color: var(--correct-color);
-    background-color: rgba(40, 167, 69, 0.1); /* Light green background */
+    background-color: rgba(40, 167, 69, 0.1);
 }
 body.dark-mode .feedback.correct {
      background-color: rgba(52, 199, 89, 0.2);
@@ -392,15 +392,15 @@ body.dark-mode .feedback.correct {
 
 .feedback.incorrect {
     color: var(--incorrect-color);
-     background-color: rgba(220, 53, 69, 0.1); /* Light red background */
+     background-color: rgba(220, 53, 69, 0.1);
 }
 body.dark-mode .feedback.incorrect {
     background-color: rgba(255, 69, 58, 0.2);
 }
 
-/* --- Footer --- */
+
 footer {
-    margin-top: 40px; /* More space above footer */
+    margin-top: 40px;
     font-size: 0.9em;
     color: var(--text-secondary);
     opacity: 0.8;
@@ -417,10 +417,10 @@ footer a:hover {
     opacity: 0.8;
 }
 
-/* --- Error Message --- */
+
 .error-message {
     color: var(--incorrect-color);
-    margin: 15px 0; /* Add vertical margin */
+    margin: 15px 0;
     font-weight: 500;
     background-color: rgba(220, 53, 69, 0.1);
     border: 1px solid rgba(220, 53, 69, 0.3);
@@ -433,7 +433,7 @@ body.dark-mode .error-message {
     border-color: rgba(255, 69, 58, 0.4);
 }
 
-/* --- Responsiveness --- */
+
 @media (max-width: 480px) {
     body {
         padding: 15px 10px;
@@ -461,33 +461,33 @@ body.dark-mode .error-message {
         font-size: 1.3em;
     }
 }
-/* --- Add these styles to your existing style.css file --- */
 
-/* --- Hint Styling --- */
+
+
 .option.option-hint-removed {
-    opacity: 0.35; /* Make it quite faded */
-    pointer-events: none; /* Prevent clicking */
-    border-style: dashed; /* Visual cue */
+    opacity: 0.35;
+    pointer-events: none;
+    border-style: dashed;
     border-color: var(--text-secondary);
-    background-color: transparent; /* Remove background */
+    background-color: transparent;
     box-shadow: none;
-    transform: none; /* Reset any hover transforms */
+    transform: none;
 }
 
-/* Optional: Style for the hint feedback message */
+
 .feedback.hint-message {
     color: var(--text-secondary);
     font-style: italic;
     font-size: 0.95em;
-    background-color: rgba(108, 117, 125, 0.1); /* Subtle background */
+    background-color: rgba(108, 117, 125, 0.1);
     padding: 5px 10px;
     border-radius: 4px;
-    display: inline-block; /* Make it wrap text */
+    display: inline-block;
     max-width: 80%;
 }
 
 
-/* --- Results Breakdown Styling --- */
+
 .results-breakdown {
     margin-top: 35px;
     width: 100%;
@@ -496,7 +496,7 @@ body.dark-mode .error-message {
     padding-top: 25px;
 }
 
-.results-title { /* Style for the main "Review Your Answers" title */
+.results-title {
      font-size: 1.5em;
      font-weight: 600;
      margin-bottom: 25px;
@@ -505,7 +505,7 @@ body.dark-mode .error-message {
 }
 
 
-.results-breakdown h4 { /* Style for "Correct Answers" and "Incorrect Answers" */
+.results-breakdown h4 {
     font-size: 1.2em;
     font-weight: 600;
     margin-bottom: 15px;
@@ -535,35 +535,35 @@ body.dark-mode .error-message {
 }
 
 .results-breakdown li {
-    background-color: var(--primary-bg); /* Use primary bg for list items */
+    background-color: var(--primary-bg);
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 12px;
     border: 1px solid var(--border-color);
-    font-size: 0.95em; /* Slightly smaller font in list */
+    font-size: 0.95em;
     line-height: 1.5;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     transition: border-left-color 0.3s ease;
 }
 body.dark-mode .results-breakdown li {
-     background-color: var(--secondary-bg-dark); /* Darker background for items in dark mode */
+     background-color: var(--secondary-bg-dark);
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
 
-.results-breakdown li .q-text { /* Style the question text within the list item */
+.results-breakdown li .q-text {
     display: block;
     font-weight: 500;
-    margin-bottom: 8px; /* Space between Q and A details */
+    margin-bottom: 8px;
     color: var(--text-color);
 }
 
 .results-breakdown li .answer-detail {
-    display: block; /* Put details on new line */
+    display: block;
     margin-top: 8px;
     font-size: 0.9em;
     color: var(--text-secondary);
-    padding-left: 10px; /* Indent answer details slightly */
+    padding-left: 10px;
     border-left: 2px solid var(--border-color);
 }
 
@@ -571,14 +571,14 @@ body.dark-mode .results-breakdown li {
     font-weight: 600;
 }
 
-/* Specific styling for correct/incorrect list items */
+
 .correct-answers li {
     border-left: 5px solid var(--correct-color);
 }
 .correct-answers li .correct-detail {
     border-left-color: var(--correct-color);
 }
-/* Highlight user's correct answer */
+
 .correct-answers li .answer-detail strong {
      color: var(--correct-color);
 }
@@ -590,45 +590,45 @@ body.dark-mode .results-breakdown li {
 .incorrect-answers li .incorrect-detail {
     border-left-color: var(--incorrect-color);
 }
-/* Highlight the actual correct answer */
+
 .incorrect-answers li .incorrect-detail strong:first-child {
     color: var(--correct-color);
 }
-/* Style user's wrong answer */
+
 .incorrect-answers li .user-answer-label {
-     color: var(--text-secondary); /* Default label color */
+     color: var(--text-secondary);
 }
 .incorrect-answers li .user-answer-text {
-    color: var(--incorrect-color); /* Make the user's wrong text red */
+    color: var(--incorrect-color);
     font-weight: 600;
 }
-.incorrect-answers li .answer-detail strong:contains("Time ran out") { /* Target timeout specifically if needed */
+.incorrect-answers li .answer-detail strong:contains("Time ran out") {
     font-style: italic;
 }
-/* --- Add these styles to your existing style.css file --- */
 
-/* --- Category Selection Styling --- */
+
+
 .form-group {
-    margin-bottom: 20px; /* Space below the dropdown */
+    margin-bottom: 20px;
     width: 100%;
-    max-width: 400px; /* Limit width of the dropdown area */
-    margin-left: auto; /* Center the group */
+    max-width: 400px;
+    margin-left: auto;
     margin-right: auto;
-    text-align: left; /* Align label text left */
+    text-align: left;
 }
 
 .form-group label {
-    display: block; /* Label on its own line */
+    display: block;
     margin-bottom: 8px;
     font-weight: 500;
     color: var(--text-secondary);
     font-size: 0.95em;
 }
 
-/* --- Category Selection Styling --- */
-/* ... other styles for .form-group and label ... */
 
-/* Find the existing #category-select rule in your style.css and replace it entirely with this */
+
+
+
 #category-select {
     width: 100%;
     padding: 10px 12px;
@@ -640,21 +640,21 @@ body.dark-mode .results-breakdown li {
     cursor: pointer;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
-    /* --- Styling to remove default arrow and add custom one --- */
-    -webkit-appearance: none; /* Remove default Safari/Chrome arrow */
-    -moz-appearance: none;    /* Remove default Firefox arrow */
-    appearance: none;         /* Remove default arrow */
 
-    /* SIMPLIFIED SVG Arrow (Hardcoded Gray Color #888888) */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23888888%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
-    background-position: right 12px center; /* Position arrow on the right */
-    background-size: 12px auto; /* Size of the arrow */
-    padding-right: 40px; /* Make space for the arrow */
-    /* --- End of Arrow Styling --- */
+    background-position: right 12px center;
+    background-size: 12px auto;
+    padding-right: 40px;
+
 }
 
-/* Keep the :focus and :disabled styles below this rule */
+
 #category-select:focus {
     outline: none;
     border-color: var(--accent-color);
@@ -667,14 +667,14 @@ body.dark-mode .results-breakdown li {
     background-color: var(--border-color);
 }
 
-/* Style for the category-specific error */
+
 #category-error {
-    margin-top: -10px; /* Pull it closer to the dropdown */
+    margin-top: -10px;
     margin-bottom: 15px;
-    text-align: center; /* Center the error text */
+    text-align: center;
 }
 
-/* Ensure general error message has space */
+
 #api-error {
     margin-top: 15px;
     text-align: center;
